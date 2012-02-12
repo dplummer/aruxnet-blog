@@ -1,3 +1,7 @@
+require_relative '../support/stub_module'
+stub_module 'ActiveModel::Naming'
+stub_module 'ActiveModel::Conversion'
+
 require_relative '../../app/models/post'
 
 describe Post do
