@@ -19,7 +19,7 @@ guard 'rspec', :version => 2 do
 
   watch(%r{^spec/support/(.+)\.rb$}) { "spec" }
 
-  watch('config/routes.rb') { "spec/routing" }
+  # watch('config/routes.rb') { "spec/routing" }
 
   watch('app/controllers/application_controller.rb') { "spec/controllers" }
 
