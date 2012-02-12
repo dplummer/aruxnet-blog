@@ -16,7 +16,7 @@ group :assets do
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer'
 
-  gem 'uglifier', '>= 1.0.3'
+  gem 'uglifier', '~> 1.2.3'
 end
 
 
@@ -36,13 +36,17 @@ end
 # To use debugger
 # gem 'ruby-debug19', :require => 'ruby-debug'
 
-gem "capybara", :group => [:development, :test]
 gem "devise"
-gem "haml", ">= 3.0.0"
+gem "haml", "~> 3.1.4"
 gem "haml-rails"
 gem "jquery-rails"
 gem "bson_ext"
-gem "mongoid", ">= 2.0.0.beta.19"
+gem "mongoid", "~> 2.4.3"
 gem "redis"
-gem "rspec-rails", ">= 2.0.1", :group => [:development, :test]
 gem "settingslogic"
+
+group :test, :development do
+  gem "rspec-rails", "~> 2.8.1"
+  gem "capybara"
+  gem "guard-rspec", "~> 0.6.0"
+end
