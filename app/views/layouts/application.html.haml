@@ -12,5 +12,10 @@
           %p.notice= flash[:notice]
         - if flash[:error]
           %p.error= flash[:error]
+      .sidebar.two.columns
+        %nav
+          %ul
+            %li= link_to "Home", root_path
+            %li= link_to "New post...", new_post_path
       .content.ten.columns
         = yield

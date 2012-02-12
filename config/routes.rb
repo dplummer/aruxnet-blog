@@ -1,6 +1,8 @@
 AruxnetBlog::Application.routes.draw do
   devise_for :users
 
+  resources :posts
+
   root to: "blog#index"
 
   # The priority is based upon order of creation:
