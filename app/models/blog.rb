@@ -1,4 +1,5 @@
 class Blog
+  attr_writer :post_maker
   attr_reader :entries
 
   def initialize
@@ -11,5 +12,20 @@ class Blog
 
   def subtitle
     "One never gets enough bits."
+  end
+
+  def new_post(*args)
+    post_maker.call(*args).tap do |p|
+      p.blog = self
+    end
+  end
+
+  def add_entry(entry)
+    @entries << entry
+  end
+
+  private
+  def post_maker
+    @post_maker ||= Post.public_method(:new)
   end
 end
