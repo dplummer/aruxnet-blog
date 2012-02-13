@@ -1,4 +1,7 @@
 %article
   %header
+    %p
+      %time{'pubdate' => 'pubdate', 'datetime' => entry.published_at.xmlschema}
+        = entry.published_at.strftime("%Y-%b-%e %l:%M%p %Z")
     %h3= entry.title
   %P= entry.body

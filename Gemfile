@@ -49,4 +49,5 @@ group :test, :development do
   gem "rspec-rails", "~> 2.8.1"
   gem "capybara"
   gem "guard-rspec", "~> 0.6.0"
+  gem "timecop", "~>0.3.5"
 end

@@ -1,3 +1,4 @@
+require 'timecop'
 require_relative '../support/stub_module'
 stub_module 'ActiveModel::Naming'
 stub_module 'ActiveModel::Conversion'
@@ -42,6 +43,36 @@ describe Post do
     it "adds the post to the blog" do
       blog.should_receive(:add_entry).with(subject)
       subject.publish
+    end
+  end
+
+  describe "#published_at" do
+    describe "before publishing" do
+      its(:published_at) { should be_nil }
+    end
+
+    describe "after publishing" do
+      before(:each) do
+        post.blog = stub.as_null_object
+      end
+
+      it "sets the publish date to the current time" do
+        Timecop.freeze do
+          expect do
+            subject.publish
+          end.to change { subject.published_at }.to(DateTime.now)
+        end
+      end
+
+      it "sets the publish time to the time passed in" do
+        clock = stub
+        now = DateTime.new(2011,1,1,1,1,1)
+        clock.stub(:now) { now }
+
+        expect do
+          subject.publish(clock)
+        end.to change { subject.published_at }.to(now)
+      end
     end
   end
 end
