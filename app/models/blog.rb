@@ -1,6 +1,5 @@
 class Blog
   attr_writer :post_maker
-  attr_reader :entries
 
   def initialize
     @entries = []
@@ -22,6 +21,10 @@ class Blog
 
   def add_entry(entry)
     @entries << entry
+  end
+
+  def entries
+    @entries.sort_by(&:published_at).reverse.take(10)
   end
 
   private
