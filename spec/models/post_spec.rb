@@ -1,7 +1,4 @@
 require 'timecop'
-require_relative '../support/stub_module'
-stub_module 'ActiveModel::Naming'
-stub_module 'ActiveModel::Conversion'
 
 require_relative '../../app/models/post'
 
@@ -34,15 +31,43 @@ describe Post do
     post.body.should == "the body"
   end
 
+  it "is not valid with a blank title" do
+    [nil, "", " "].each do |title|
+      subject.title = title
+      subject.should_not be_valid
+    end
+  end
+
+  it "is valid with a non-blank title" do
+    subject.title = "x"
+    subject.should be_valid
+  end
+
   describe "#publish" do
     let(:blog) { mock("Blog") }
     before(:each) do
       post.blog = blog
+      post.title = "x"
     end
 
     it "adds the post to the blog" do
       blog.should_receive(:add_entry).with(subject)
       subject.publish
+    end
+
+    describe "given an invalid post" do
+      before do
+        subject.title = nil
+      end
+
+      it "does not add the post to the blog" do
+        blog.should_not_receive(:add_entry).with(subject)
+        subject.publish
+      end
+
+      it "returns false" do
+        subject.publish.should be_false
+      end
     end
   end
 
@@ -54,6 +79,7 @@ describe Post do
     describe "after publishing" do
       before(:each) do
         post.blog = stub.as_null_object
+        post.title = "x"
       end
 
       it "sets the publish date to the current time" do
